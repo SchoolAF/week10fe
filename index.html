@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group select[multiple] {
+            height: 100px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Form Submission</h2>
+        <form id="dataForm">
+            <div class="form-group">
+                <label for="longitude">Longitude</label>
+                <input type="text" id="longitude" name="longitude" required>
+            </div>
+            <div class="form-group">
+                <label for="latitude">Latitude</label>
+                <input type="text" id="latitude" name="latitude" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="text" id="phone_number" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="checkin">Check-in</label>
+                <input type="text" id="checkin" name="checkin" required>
+            </div>
+            <div class="form-group">
+                <label for="nama">Name</label>
+                <input type="text" id="nama" name="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="biodata_phone_number">Biodata Phone Number</label>
+                <input type="text" id="biodata_phone_number" name="biodata_phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="jabatan">Position (Jabatan)</label>
+                <input type="text" id="jabatan" name="jabatan" required>
+            </div>
+            <div class="form-group">
+                <label for="durasi">Duration (Durasi)</label>
+                <input type="number" id="durasi" name="durasi" required>
+            </div>
+            <div class="form-group">
+                <label for="jam_masuk">Start Time (Jam Masuk)</label>
+                <input type="time" id="jam_masuk" name="jam_masuk" required>
+            </div>
+            <div class="form-group">
+                <label for="jam_keluar">End Time (Jam Keluar)</label>
+                <input type="time" id="jam_keluar" name="jam_keluar" required>
+            </div>
+            <div class="form-group">
+                <label for="gmt">GMT</label>
+                <input type="number" id="gmt" name="gmt" required>
+            </div>
+            <div class="form-group">
+                <label for="hari">Days (Hari)</label>
+                <select id="hari" name="hari" multiple required>
+                    <option value="Senin">Senin</option>
+                    <option value="Selasa">Selasa</option>
+                    <option value="Rabu">Rabu</option>
+                    <option value="Kamis">Kamis</option>
+                    <option value="Jumat">Jumat</option>
+                    <option value="Sabtu">Sabtu</option>
+                    <option value="Minggu">Minggu</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="shift">Shift</label>
+                <input type="number" id="shift" name="shift" required>
+            </div>
+            <div class="form-group">
+                <label for="piket_tim">Piket Team</label>
+                <input type="text" id="piket_tim" name="piket_tim" required>
+            </div>
+            <div class="form-group">
+                <label for="hari_kerja">Work Days (Hari Kerja)</label>
+                <select id="hari_kerja" name="hari_kerja" multiple required>
+                    <option value="Senin">Senin</option>
+                    <option value="Selasa">Selasa</option>
+                    <option value="Rabu">Rabu</option>
+                    <option value="Kamis">Kamis</option>
+                    <option value="Jumat">Jumat</option>
+                    <option value="Sabtu">Sabtu</option>
+                    <option value="Minggu">Minggu</option>
+                </select>
+            </div>
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+    <script>
+        function submitForm() {
+            const form = document.getElementById('dataForm');
+            const formData = new FormData(form);
+            const data = {
+                longitude: parseFloat(formData.get('longitude')),
+                latitude: parseFloat(formData.get('latitude')),
+                location: formData.get('location'),
+                phone_number: formData.get('phone_number'),
+                checkin: formData.get('checkin'),
+                biodata: {
+                    nama: formData.get('nama'),
+                    phone_number: formData.get('biodata_phone_number'),
+                    jabatan: formData.get('jabatan'),
+                    jam_kerja: [{
+                        durasi: parseInt(formData.get('durasi')),
+                        jam_masuk: formData.get('jam_masuk'),
+                        jam_keluar: formData.get('jam_keluar'),
+                        gmt: parseInt(formData.get('gmt')),
+                        hari: Array.from(formData.getAll('hari')),
+                        shift: parseInt(formData.get('shift')),
+                        piket_tim: formData.get('piket_tim')
+                    }],
+                    hari_kerja: Array.from(formData.getAll('hari_kerja'))
+                }
+            };
+            
+            fetch('http://127.0.0.1:8080/insert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 200) {
+                    alert('Success: ' + data.message + '\nInserted ID: ' + data.inserted_id);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting the form.');
+            });
+        }
+    </script>
+</body>
+</html>
